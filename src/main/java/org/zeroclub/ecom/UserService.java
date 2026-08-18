@@ -1,8 +1,8 @@
 package org.zeroclub.ecom;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,33 +10,30 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    public List<User> userList = new ArrayList<>();
-    private Long nextId =1L;
+
+    private final UserRepository userRepository;
+
 
 public List<User> fetchAllUser(){
-    return userList;
+    return userRepository.findAll();
 }
 
-    public List<User> addUser(User user) {
-         user.setId(nextId++);
-        userList.add(user);
-        return userList;
+    public void addUser(User user) {
+    userRepository.save(user);
     }
 
     public Optional<User> fetchUser(Long id) {
-        return userList.stream()
-                .filter(user -> user.getId()==(id))
-                .findFirst();
+        return userRepository.findById(id);
     }
 
     public boolean updateUser(Long id, User updatedUser) {
-        return userList.stream()
-                .filter(user -> user.getId()==(id))
-                .findFirst()
+        return userRepository.findById(id)
                 .map(existingUser -> {
                     existingUser.setFirstName(updatedUser.getFirstName());
                     existingUser.setLastName(updatedUser.getLastName());
+                    userRepository.save(existingUser);
                     return true;
                 }).orElse(false);
     }
