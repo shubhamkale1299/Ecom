@@ -43,7 +43,8 @@ public class CartService {
         if (existingCartItem != null) {
             // Update the quantity
             existingCartItem.setQuantity(existingCartItem.getQuantity() + request.getQuantity());
-            existingCartItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(existingCartItem.getQuantity())));
+            existingCartItem.setPrice(product.getPrice());
+            existingCartItem.setSubTotal(product.getPrice().multiply(BigDecimal.valueOf(existingCartItem.getQuantity() + request.getQuantity())));
             cartItemRepository.save(existingCartItem);
         } else {
             // Create new cart item
@@ -51,7 +52,8 @@ public class CartService {
             cartItem.setUser(user);
             cartItem.setProduct(product);
             cartItem.setQuantity(request.getQuantity());
-            cartItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
+            cartItem.setPrice(product.getPrice());
+            cartItem.setSubTotal(product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
             cartItemRepository.save(cartItem);
         }
         return true;
