@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zeroclub.ecom.dto.OrderResponse;
 import org.zeroclub.ecom.service.OrderService;
 
-@RestController
+    @RestController
     @RequiredArgsConstructor
     @RequestMapping("/api/orders")
     public class OrderController {
