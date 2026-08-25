@@ -1,17 +1,23 @@
 spring:
   application:
     name: Ecom
-    datasource:
-      url: jdbc:postgresql://localhost:5432/ecomdb
-      username: Root
-      password: Root123
 
-    jpa:
-      database: POSTGRESQL
-      show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecomdb?options=-c%20TimeZone=Asia/kolkata
+    username: embarkx
+    password: embarkx
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
       hibernate:
-        ddl-auto: update
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
 #  h2:
 #    console:
 #      enabled: true
